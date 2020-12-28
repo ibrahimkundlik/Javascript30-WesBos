@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Scoped CSS Variables and JS</title>
+	</head>
+	<body>
+		<h2>Update CSS Variables with <span class="base-color">JS</span></h2>
+
+		<div class="controls">
+			<label for="spacing">Spacing:</label>
+			<input
+				id="spacing"
+				type="range"
+				name="spacing"
+				min="20"
+				max="200"
+				value="20"
+				data-sizing="px"
+			/>
+
+			<label for="blur">Blur:</label>
+			<input
+				id="blur"
+				type="range"
+				name="blur"
+				min="0"
+				max="25"
+				value="0"
+				data-sizing="px"
+			/>
+
+			<label for="base">Base Color</label>
+			<input id="base" type="color" name="color" value="#ffc600" />
+		</div>
+
+		<div class="img-cont">
+			<img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
+		</div>
+
+		<style>
+			:root {
+				--spacing: 20px;
+				--blur: 0px;
+				--color: #ffc600;
+			}
+			body {
+				text-align: center;
+				background-color: #74ebd5;
+				background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
+				color: rgb(63, 63, 63);
+				font-family: "helvetica neue", sans-serif;
+				font-weight: 100;
+				font-size: 30px;
+			}
+			.controls {
+				margin-bottom: 50px;
+			}
+			input {
+				width: 100px;
+			}
+			img {
+				width: 100%;
+				display: block;
+			}
+			.img-cont {
+				max-width: 600px;
+				margin: 0 auto;
+				filter: blur(var(--blur));
+				background-color: var(--color);
+				padding: var(--spacing) 0;
+			}
+			.base-color {
+				color: var(--color);
+			}
+		</style>
+
+		<script>
+			const inputs = document.querySelectorAll("input");
+			inputs.forEach((curr) => curr.addEventListener("change", handleChange));
+			inputs.forEach((curr) =>
+				curr.addEventListener("mousemove", handleChange)
+			);
+			function handleChange() {
+				const unit = this.dataset.sizing || "";
+				document.documentElement.style.setProperty(
+					`--${this.name}`,
+					this.value + unit
+				);
+			}
+		</script>
+	</body>
+</html>
