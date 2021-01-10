@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Type Ahead 👀</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<form class="search-form">
+			<input type="text" class="search" placeholder="City or State" />
+			<ul class="suggestions">
+				<li>Filter for a city</li>
+				<li>or a state</li>
+			</ul>
+		</form>
+		<script>
+			function numberWithCommas(x) {
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			}
+			const endpoint =
+				"https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+			const cities = [];
+			fetch(endpoint)
+				.then((allData) => allData.json())
+				.then((data) => cities.push(...data));
+
+			const searchText = document.querySelector(".search");
+			searchText.addEventListener("keyup", getText);
+			function getText() {
+				displayList(filterList(searchText.value), searchText.value);
+			}
+			function filterList(ipText) {
+				return cities.filter((curr) => {
+					const regex = new RegExp(ipText, "gi");
+					return curr.city.match(regex) || curr.state.match(regex);
+				});
+			}
+			function displayList(list, ipText) {
+				const mainList = document.querySelector(".suggestions");
+				const regex = new RegExp(ipText, "gi");
+				mainList.innerHTML = list
+					.map((curr) => {
+						return `
+          <li>
+          <span class="name">${curr.city.replace(
+						regex,
+						`<span class="hl">${ipText}</span>`
+					)}, ${curr.state.replace(
+							regex,
+							`<span class="hl">${ipText}</span>`
+						)}</span>
+          <span class="population">${numberWithCommas(curr.population)}</span>
+          </li>
+          `;
+					})
+					.join("");
+			}
+		</script>
+	</body>
+</html>
