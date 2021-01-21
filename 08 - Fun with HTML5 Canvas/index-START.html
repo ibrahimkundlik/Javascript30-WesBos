@@ -1,19 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
-</head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTML5 Canvas</title>
+	</head>
+	<body>
+		<p>HTML5 CANVAS</p>
+		<canvas id="draw"></canvas>
+		<style>
+			html,
+			body,
+			p {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				background-color: #74ebd5;
+				background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
+				text-align: center;
+				height: 100vh;
+				overflow: hidden;
+				font-family: Helvetica, sans-serif;
+				font-size: 1.5rem;
+				letter-spacing: 4px;
+				word-spacing: 10px;
+				display: flex;
+				flex-flow: column wrap;
+				justify-content: space-evenly;
+				align-items: center;
+			}
+			canvas {
+				background-color: ghostwhite;
+				width: 90vw;
+				height: 80vh;
+				border-radius: 2rem;
+				box-shadow: 10px 10px 14px rgba(0, 0, 0, 0.23);
+			}
+		</style>
+		<script>
+			const canvas = document.querySelector("#draw");
+			const ctx = canvas.getContext("2d");
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+			canvas.width = canvas.clientWidth;
+			canvas.height = canvas.clientHeight;
 
-</body>
+			//styling of line
+			ctx.strokeStyle = "#ff0000";
+			ctx.lineJoin = "round";
+			ctx.lineCap = "round";
+			ctx.lineWidth = 10;
+
+			//variables to control x and y on canvas
+			let posX = 0;
+			let posY = 0;
+			let isDrawing = false;
+
+			//control color and width of stroke
+			let hue = 0;
+
+			//adding event listeners for mouse events
+			canvas.addEventListener("mousemove", draw);
+			canvas.addEventListener("mousedown", (e) => {
+				isDrawing = true;
+				[posX, posY] = [e.offsetX, e.offsetY];
+			});
+			canvas.addEventListener("mouseup", () => (isDrawing = false));
+			canvas.addEventListener("mouseleave", () => (isDrawing = false));
+
+			//draw on canvas
+			function draw(e) {
+				if (!isDrawing) return;
+				ctx.beginPath();
+				//start point
+				ctx.moveTo(posX, posY);
+				//end point
+				ctx.lineTo(e.offsetX, e.offsetY);
+				//draw
+				ctx.stroke();
+				[posX, posY] = [e.offsetX, e.offsetY];
+
+				//control color
+				hue++;
+				if (hue > 360) hue = 0;
+				ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+			}
+		</script>
+	</body>
 </html>
