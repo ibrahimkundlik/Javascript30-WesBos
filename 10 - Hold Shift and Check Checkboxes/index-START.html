@@ -7,7 +7,7 @@
 	<body>
 		<style>
 			html {
-				font-family: sans-serif;
+				font-family: "helvetica neue";
 				background-color: #74ebd5;
 				background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
 			}
@@ -100,7 +100,18 @@
 				curr.addEventListener("click", clickBox);
 			});
 			function clickBox(e) {
-				console.log(e.shiftKey);
+				let inRange = false;
+				if (e.shiftKey) {
+					checks.forEach((curr) => {
+						if (curr === e.target || curr === lastCheck) {
+							inRange = !inRange;
+						}
+						if (inRange) {
+							curr.checked = true;
+						}
+					});
+				}
+				lastCheck = e.target;
 			}
 		</script>
 	</body>
