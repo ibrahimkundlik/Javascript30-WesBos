@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Key Detection</title>
+		<script
+			type="text/javascript"
+			src="https://www.cornify.com/js/cornify.js"
+		></script>
+		<style>
+			body {
+				display: flex;
+				flex-flow: column nowrap;
+				justify-content: center;
+				align-items: center;
+				min-height: 100vh;
+				overflow: hidden;
+				background-color: #74ebd5;
+				background-image: linear-gradient(90deg, #74ebd5 0%, #9face6 100%);
+			}
+			.typed {
+				z-index: 1000;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>TYPE UNICORN</h1>
+		<p class="typed"></p>
+		<script>
+			const typed = document.querySelector(".typed");
+			const pressed = [];
+			const match = "unicorn";
+			window.addEventListener("keyup", (e) => {
+				if (pressed.length >= match.length) pressed.splice(0);
+				pressed.push(e.key);
+				typed.innerText = pressed.join("").toLowerCase();
+				if (typed.innerText === match) cornify_add();
+			});
+		</script>
+	</body>
+</html>
