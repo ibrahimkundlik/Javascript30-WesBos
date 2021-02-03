@@ -31,10 +31,20 @@
 			const pressed = [];
 			const match = "unicorn";
 			window.addEventListener("keyup", (e) => {
-				if (pressed.length >= match.length) pressed.splice(0);
-				pressed.push(e.key);
+				if (pressed.length === match.length) pressed.splice(0);
+				if (e.key === "Backspace") {
+					pressed.splice(pressed.length - 1);
+				} else {
+					pressed.push(e.key);
+				}
 				typed.innerText = pressed.join("").toLowerCase();
 				if (typed.innerText === match) cornify_add();
+			});
+
+			window.addEventListener("keydown", (e) => {
+				if (e.key === "Backspace") {
+					e.preventDefault();
+				}
 			});
 		</script>
 	</body>
