@@ -237,6 +237,27 @@
 					if (callNow) func.apply(context, args);
 				};
 			}
+
+			const images = document.querySelectorAll(".slide-in");
+			const dispImage = (e) => {
+				images.forEach((image) => {
+					//top of image
+					const slideIn = window.scrollY + window.innerHeight;
+					//bottom of image
+					const imageBottom = image.offsetTop + image.height;
+
+					const isHalfShown = slideIn > image.offsetTop;
+					const isNotScrolled = window.scrollY < imageBottom;
+
+					if (isHalfShown && isNotScrolled) {
+						image.classList.add("active");
+					} else {
+						image.classList.remove("active");
+					}
+				});
+			};
+
+			window.addEventListener("scroll", debounce(dispImage));
 		</script>
 
 		<style>
