@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Get User Media Code Along!</title>
+		<link rel="shortcut icon" href="#" type="image/x-icon" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="photobooth">
+			<div class="controls">
+				<video class="player"></video>
+				<div>
+					<h4>⬅ Video Feed</h4>
+					<button class="capture" onClick="takePhoto()">Take Photo 📷</button>
+				</div>
+			</div>
+			<canvas class="photo"></canvas>
+			<h3>🌟 Clicked Images ⬇</h3>
+			<div class="strip"></div>
+		</div>
+
+		<audio class="snap" src="./snap.mp3" hidden></audio>
+
+		<script src="scripts.js"></script>
+	</body>
+</html>
